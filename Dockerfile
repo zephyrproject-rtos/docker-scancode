@@ -2,7 +2,7 @@ FROM python:2.7
 
 ENV SCANCODE_RELEASE=3.1.1
 
-RUN apt-get update && apt-get install bzip2 xz-utils zlib1g libxml2-dev libxslt1-dev
+RUN apt-get update && apt-get install -y bzip2 xz-utils zlib1g libxml2-dev libxslt1-dev
 
 ADD "https://github.com/nexB/scancode-toolkit/releases/download/v${SCANCODE_RELEASE}/scancode-toolkit-${SCANCODE_RELEASE}.tar.bz2" .
 
