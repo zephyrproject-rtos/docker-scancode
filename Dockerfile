@@ -1,17 +1,29 @@
-FROM python:3.10
+FROM python:3.12-slim
 
-ENV SCANCODE_RELEASE=30.1.0
+ENV SCANCODE_RELEASE=32.3.0
 
-RUN apt-get update && apt-get install -y bzip2 xz-utils zlib1g libxml2-dev libxslt1-dev
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    build-essential \
+    git \
+    wget \
+    curl \
+    unzip \
+    bzip2 \
+    xz-utils \
+    zlib1g \
+    libxml2-dev \
+    libxslt1-dev \
+    libpopt0 \
+    && rm -rf /var/lib/apt/lists/*
 
-ADD "https://github.com/nexB/scancode-toolkit/archive/refs/tags/v${SCANCODE_RELEASE}.tar.gz" .
+RUN mkdir /opt/scancode-toolkit && \
+    wget -qO- "https://github.com/nexB/scancode-toolkit/archive/refs/tags/v${SCANCODE_RELEASE}.tar.gz" | \
+    tar xz --strip-components=1 -C /opt/scancode-toolkit
 
-RUN mkdir scancode-toolkit && tar xzvf v${SCANCODE_RELEASE}.tar.gz -C scancode-toolkit --strip-components=1
-
-WORKDIR scancode-toolkit
+WORKDIR /opt/scancode-toolkit
 
 RUN ./scancode --help
 
-ENV PATH=$HOME/scancode-toolkit:$PATH
+ENV PATH="/opt/scancode-toolkit:$PATH"
 
-RUN pip3 install pyyaml
+RUN pip3 install pyyaml --no-cache-dir
