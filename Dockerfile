@@ -1,6 +1,6 @@
 FROM python:3.12-slim
 
-ENV SCANCODE_RELEASE=32.3.0
+ENV SCANCODE_RELEASE=32.4.1
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
     build-essential \
