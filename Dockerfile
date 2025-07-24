@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     libxml2-dev \
     libxslt1-dev \
     libpopt0 \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /opt/scancode-toolkit && \
